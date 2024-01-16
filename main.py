@@ -14,6 +14,7 @@ while True:
             file.close()
         case "show":
             for  index, todo in enumerate(todos):
+                todo = todo.strip("\n")
                 print(f"{index + 1}: {todo}")
         case "exit":
             break
