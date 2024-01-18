@@ -1,31 +1,38 @@
 user_prompt = "Type 'add', 'show', 'edit', 'complete' or 'exit':"
-file = open("todos.txt", 'r')
-todos = file.readlines()
-file.close()
+with open("todos.txt", 'r') as file:
+    todos = file.readlines()
 
 while True:
     action = input(user_prompt).strip()
-    match action:
-        case "add":
-            todo = input("Enter a todo: ") + "\n"
-            todos.append(todo)
-            file = open('todos.txt', 'w')
+    if action.startswith("add"):
+        todo = action[4:]
+        todos.append(todo)
+        with open('todos.txt', 'w') as file:
             file.writelines(todos)
-            file.close()
-        case "show":
-            for  index, todo in enumerate(todos):
-                todo = todo.strip("\n")
-                print(f"{index + 1}: {todo}")
-        case "exit":
-            break
-        case "complete":
-            number = int(input("Which position you want to complete? Write a number: "))
+    elif action.startswith("show"):
+        for index, todo in enumerate(todos):
+            todo = todo.strip("\n")
+            print(f"{index + 1}: {todo}")
+    elif action.startswith("complete"):
+        try:
+            number = int(action[9:])
             todos.pop(number - 1)
-        case "edit":
-            number = int(input("Which position you want to edit? Write a number: "))
+            with open('todos.txt', 'w') as file:
+                file.writelines(todos)
+        except:
+            print("Can't complete that!")
+    elif action.startswith("edit"):
+        try:
+            number = int(action[5:])
             new_todo = input("Write a new text for a position: ")
             todos[number - 1] = new_todo
-        case _:
-            print("idk what you just printed!")
+            with open('todos.txt', 'w') as file:
+                file.writelines(todos)
+        except:
+            print("Your command is not valid! Type a number!")
+    elif action.startswith("exit"):
+        break
+    else:
+        print("idk what you just printed!")
 
 print("Bye!")
