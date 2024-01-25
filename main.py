@@ -1,17 +1,15 @@
-user_prompt = "Type 'add', 'show', 'edit', 'complete' or 'exit':"
-with open("todos.txt", 'r') as file:
-    todos = file.readlines()
+from functions import read_todos, write_todos
 
-def write_todos(writing, filepath="todos.txt"):
-    '''Writes up your todos in a file (todos.txt by default)'''
-    with open(filepath, 'w') as file:
-        file.writelines(writing)
+
+todos = read_todos()
+user_prompt = "Type 'add', 'show', 'edit', 'complete' or 'exit':"
+
 
 while True:
     action = input(user_prompt).strip()
     if action.startswith("add"):
         todo = action[4:]
-        todos.append(todo)
+        todos.append(todo + "\n")
         write_todos(todos)
     elif action.startswith("show"):
         for index, todo in enumerate(todos):
@@ -28,7 +26,7 @@ while True:
         try:
             number = int(action[5:])
             new_todo = input("Write a new text for a position: ")
-            todos[number - 1] = new_todo
+            todos[number - 1] = new_todo + "\n"
             write_todos(todos)
         except:
             print("Your command is not valid! Type a number!")
