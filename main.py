@@ -3,6 +3,7 @@ with open("todos.txt", 'r') as file:
     todos = file.readlines()
 
 def write_todos(writing, filepath="todos.txt"):
+    '''Writes up your todos in a file (todos.txt by default)'''
     with open(filepath, 'w') as file:
         file.writelines(writing)
 
