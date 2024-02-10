@@ -1,9 +1,10 @@
 from functions import read_todos, write_todos
+import time
 
 
 todos = read_todos()
 user_prompt = "Type 'add', 'show', 'edit', 'complete' or 'exit':"
-
+print("Today is " + time.strftime('%d.%m.%Y %H:%M'))
 
 while True:
     action = input(user_prompt).strip()
